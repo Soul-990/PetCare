@@ -1,0 +1,48 @@
+@extends('PO.layout')
+@section('title', 'Add Pets Images <3')
+@section('petG', 'active')
+@section('content')
+<div class="d-flex">
+    <a href="{{route('Gallery')}}" class="btn btn-primary mb-3 ms-auto me-5" style="width: fit-content">Go back</a>
+    </div>
+    <div class="row g-4 mb-4">
+      <!-- Column 1: Basic controls -->
+      <div class="col-12 col-lg-7">
+        <div class="card border-light shadow-sm p-4" style="height: fit-content">
+          <h5 class="card-title mb-4">Add Your Pet's Images :3</h5>
+            <form action="/pets/gallery/add-image" method="POST" enctype="multipart/form-data">
+                @csrf
+                <!-- Text input -->
+                <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
+                <div class="mb-3">
+                    <label for="id" class="form-label-custom">Pet</label>
+                    <select class="form-select-custom" name="p_id" id="id" required>
+                    <option selected disabled>Choose a Pet...</option>
+                    @foreach ($pet as $p)
+                        @if ($p->user_id == Auth::user()->id)
+                            <option value="{{$p->id}}">{{$p->name}}</option>
+                        @endif
+                    @endforeach
+                    </select>
+                </div>
+                <!-- Text input -->
+                <div class="mb-3">
+                    <label for="rep" class="form-label-custom">Image :3 </label>
+                    <input type="file" class="form-control-custom" id="rep" name="image" required>
+                </div>
+                <div class="mb-3">
+                    <input type="submit" class="btn btn-success" id="basicText" value="Add Image">
+                </div>
+            </form>
+        </div>
+      </div>
+      <div class="col-12 col-lg-5 d-flex justify-content-center" style="height: fit-content;">
+            <div class="card alert-green-card">
+                <div class="d-flex justify-content-center">
+                    <img src="{{asset('Dashboard/assets/images/Add Pet.jpg')}}" style="height: 300px; width:300px; border-radius: 20px" alt="">
+                </div>
+              <h2 class="text-secondary text-center mt-3">Your Pet, Your Life</h2>
+            </div>
+          </div>
+    </div>
+@endsection
